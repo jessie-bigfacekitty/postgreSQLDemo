@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bigfacekitty.mapper.DomeDaoMapper">
+
+    <sql id="base_word">
+        id
+        ,name,nickname,companyname,companyid,password,status,habits
+    </sql>
+    <select id="findById" parameterType="com.bigfacekitty.entity.Dome" resultType="com.bigfacekitty.entity.Dome">
+        select
+        <include refid="base_word"/>
+        from dome where status = 0 and id = #{dome.id}
+    </select>
+
+    <select id="findHabitsById" resultType="java.lang.String">
+        select
+        habits
+        from dome where status = 0 and id = 1
+    </select>
+
+    <select id="findAll" resultType="com.bigfacekitty.entity.Dome">
+        select
+        <include refid="base_word"/>
+        from dome where status = 0
+    </select>
+    <insert id="insertDome" parameterType="com.bigfacekitty.entity.Dome">
+        insert into dome(name, nick_name, company_name, company_id, password, status)
+        values (#{dome.name,jdbcType=VARCHAR},
+                #{dome.nickName,jdbcType=VARCHAR},
+                #{dome.companyName,jdbcType=VARCHAR},
+                #{dome.companyId,jdbcType=VARCHAR},
+                #{dome.password,jdbcType=VARCHAR},
+                0,
+                #{dome.habits,jdbcType=ARRAY)
+    </insert>
+</mapper>
